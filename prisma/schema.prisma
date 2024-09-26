@@ -18,17 +18,22 @@ model User {
 }
 
 model Admin {
-  id    Int      @id @default(autoincrement())
-  email String
-  role ROLE @default(SUB) 
-  cAt   DateTime @default(now())
+  id     Int      @id @default(autoincrement())
+  email  String   @unique @db.VarChar(300)
+  role   ROLE     @default(SUB)
+  cAt    DateTime @default(now())
+  Course Course[]
 }
 
 model Course {
   id        Int        @id @default(autoincrement())
   title     String
+  desc      String
+  price     Float
   thumbnail String
   tags      String
+  creator   Admin      @relation(fields: [creatorId], references: [id])
+  creatorId Int
   cAt       DateTime   @default(now())
   Purchase  Purchase[]
 }
