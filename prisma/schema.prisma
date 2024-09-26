@@ -6,3 +6,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id         String     @id @default(cuid())
+  email      String     @unique @db.VarChar(300)
+  password   String
+  profileImg String?
+  cAt        DateTime   @default(now())
+  isVerified Boolean    @default(false)
+  Purchase   Purchase[]
+}
+
+model Admin {
+  id    Int      @id @default(autoincrement())
+  email String
+  role ROLE @default(SUB) 
+  cAt   DateTime @default(now())
+}
+
+model Course {
+  id        Int        @id @default(autoincrement())
+  title     String
+  thumbnail String
+  tags      String
+  cAt       DateTime   @default(now())
+  Purchase  Purchase[]
+}
+
+model Purchase {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  course     Course   @relation(fields: [courseId], references: [id])
+  courseId   Int
+  assignedAt DateTime @default(now())
+
+  @@id([userId, courseId])
+}
+
+enum ROLE {
+  SUPER
+  SUB
+}
