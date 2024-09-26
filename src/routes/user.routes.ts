@@ -1,17 +1,14 @@
 import { Router } from 'express';
 
 import { auth } from '../middlewares/auth.middlewares.js';
+import { getAllCourse, purchaseCourse } from '../controllers/user.controllers.js';
 
 const userRouter = Router();
 
 userRouter.use(auth);
 
-userRouter.get('/courses', (req, res) => {
-  res.end();
-});
+userRouter.get('/courses', getAllCourse);
 
-userRouter.post('/purchase/:courseId', (req, res) => {
-  res.end();
-});
+userRouter.post('/purchase/:courseId', purchaseCourse);
 
 export default userRouter;

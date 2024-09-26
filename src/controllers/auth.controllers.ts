@@ -55,7 +55,7 @@ export const signin = async (req: Request, res: Response) => {
 export const signup = async (req: Request, res: Response) => {
   //use zod for data validation
 
-  const email = req.body.em;
+  const email = req.body.email;
   const pwd = req.body.pwd;
 
   try {
