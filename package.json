@@ -10,6 +10,7 @@
     "buildnrun": "tsc && node dist/index.js",
     "dev": "nodemon src/index.ts",
     "prisma:migrate": "npx prisma migrate dev",
+    "prisma:seed": "node --loader=ts-node/esm prisma/seed.ts",
     "format": "npx prettier . --write"
   },
   "keywords": [],
@@ -24,6 +25,7 @@
     "prettier": "^3.3.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.7.2",
