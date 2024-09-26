@@ -2,9 +2,15 @@
   "name": "course-platform-backend",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:server": "node dist/index.js",
+    "buildnrun": "tsc && node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "prisma:migrate": "npx prisma migrate dev",
+    "format": "npx prettier . --write"
   },
   "keywords": [],
   "author": "",

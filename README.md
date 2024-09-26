@@ -1,3 +1,3 @@
-# Project Name 
+# Course-Selling-Platform
 
-Description about Project and setup guide. 
+Description about Project and setup guide.
