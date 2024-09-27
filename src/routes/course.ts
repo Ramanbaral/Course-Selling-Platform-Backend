@@ -1,24 +1,23 @@
 import { Router } from 'express';
 
 import { auth } from '../middlewares/auth.js';
+import {
+  createCourse,
+  deleteCourse,
+  modifyPrice,
+  courseInf,
+} from '../controllers/course.js';
 
 const courseRouter = Router();
 
 courseRouter.use(auth);
 
-courseRouter.post('/create', (req, res) => {
-  const { id } = req.user;
-  res.end();
-});
+courseRouter.post('/create', createCourse);
 
-courseRouter.delete('/delete/:id', (req, res) => {
-  const { id } = req.user;
-  res.end();
-});
+courseRouter.get('/:id', courseInf);
 
-courseRouter.put('/modifyprice/:id', (req, res) => {
-  const { id } = req.user;
-  res.end();
-});
+courseRouter.delete('/delete/:id', deleteCourse);
+
+courseRouter.put('/modifyprice/:id', modifyPrice);
 
 export default courseRouter;
