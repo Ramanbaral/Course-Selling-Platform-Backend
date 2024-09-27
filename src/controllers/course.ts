@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { error } from 'console';
 
 const prisma = new PrismaClient();
 
 export const createCourse = async (req: Request, res: Response) => {
-  const adminId = parseInt(req.user.id);
+  const adminId = req.admin.id;
 
   //add data validation (zod)
   const { title, desc, price, thumbnail, tags } = req.body;
@@ -63,7 +62,7 @@ export const courseInf = async (req: Request, res: Response) => {
 };
 
 export const deleteCourse = async (req: Request, res: Response) => {
-  const adminId = parseInt(req.user.id);
+  const adminId = req.admin.id;
   const courseId = parseInt(req.params.id);
 
   try {
@@ -100,7 +99,7 @@ export const deleteCourse = async (req: Request, res: Response) => {
 };
 
 export const modifyPrice = async (req: Request, res: Response) => {
-  const adminId = parseInt(req.user.id);
+  const adminId = req.admin.id;
   const courseId = parseInt(req.params.id);
 
   const { price } = req.body;
