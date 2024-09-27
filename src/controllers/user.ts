@@ -34,7 +34,6 @@ export const getAllCourse = async (req: Request, res: Response) => {
 export const purchaseCourse = async (req: Request, res: Response) => {
   const userId = req.user.id;
   const courseId = parseInt(req.params.courseId);
-  console.log(courseId);
 
   try {
     //check for validity of courseId

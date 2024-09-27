@@ -12,8 +12,7 @@ const p = new PrismaClient();
 export const signin = async (req: Request, res: Response) => {
   //use zod for data validation
 
-  const email = req.body.email;
-  const pwd = req.body.pwd;
+  const { email, pwd } = req.body;
 
   try {
     const usr = await p.user.findFirstOrThrow({
@@ -47,7 +46,7 @@ export const signin = async (req: Request, res: Response) => {
 
     res.status(401).json({
       error: true,
-      msg: 'Invalid username or password',
+      msg: 'Invalid email or password',
     });
   }
 };
@@ -55,8 +54,7 @@ export const signin = async (req: Request, res: Response) => {
 export const signup = async (req: Request, res: Response) => {
   //use zod for data validation
 
-  const email = req.body.email;
-  const pwd = req.body.pwd;
+  const { email, pwd } = req.body;
 
   try {
     //hash the pwd before storing in DB

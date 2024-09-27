@@ -1,13 +1,11 @@
 import { Router } from 'express';
 
+import { signup, signin } from '../controllers/admin.js';
+
 const adminRouter = Router();
 
-adminRouter.post('/signup', (req, res) => {
-  res.end();
-});
+adminRouter.post('/signup', signup);
 
-adminRouter.post('/login', (req, res) => {
-  res.end();
-});
+adminRouter.post('/login', signin);
 
 export default adminRouter;

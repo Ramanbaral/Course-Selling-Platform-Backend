@@ -18,11 +18,12 @@ model User {
 }
 
 model Admin {
-  id     Int      @id @default(autoincrement())
-  email  String   @unique @db.VarChar(300)
-  role   ROLE     @default(SUB)
-  cAt    DateTime @default(now())
-  Course Course[]
+  id       Int      @id @default(autoincrement())
+  email    String   @unique @db.VarChar(300)
+  password String
+  role     ROLE     @default(SUB)
+  cAt      DateTime @default(now())
+  Course   Course[]
 }
 
 model Course {

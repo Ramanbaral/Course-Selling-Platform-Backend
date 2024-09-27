@@ -11,6 +11,7 @@ async function main() {
     create: {
       email: 'admin@test.com',
       role: 'SUPER',
+      password: 'pwd',
       Course: {
         create: {
           title: 'FullStack Dev',
