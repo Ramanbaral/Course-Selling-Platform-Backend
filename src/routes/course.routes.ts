@@ -10,8 +10,8 @@ courseRouter.delete('/delete/:id', (req, res) => {
   res.end();
 });
 
-courseRouter.put("/modifyprice/:id", (req, res) => {
+courseRouter.put('/modifyprice/:id', (req, res) => {
   res.end();
-})
+});
 
 export default courseRouter;

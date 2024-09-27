@@ -23,8 +23,8 @@ export const signin = async (req: Request, res: Response) => {
       select: {
         id: true,
         email: true,
-        password: true
-      }
+        password: true,
+      },
     });
 
     //check pwd with hashed password

@@ -43,8 +43,8 @@ export const purchaseCourse = async (req: Request, res: Response) => {
         id: courseId,
       },
       select: {
-        title: true
-      }
+        title: true,
+      },
     });
 
     //add payment methods and receive payment before assigning course to user
