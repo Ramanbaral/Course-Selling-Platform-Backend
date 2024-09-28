@@ -13,6 +13,10 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(import.meta.dirname, 'public')));
 
+app.get('/', (req, res) => {
+  res.send('Up and Running...');
+});
+
 app.use('/auth', authRouter);
 app.use('/course', courseRouter);
 app.use('/user', userRouter);
