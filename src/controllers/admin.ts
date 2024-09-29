@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 
+import ApiResponse from '../utils/apiResponse.js';
+
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'somesecret';
 const SALTROUNDS = 3;
@@ -25,17 +27,16 @@ export const signup = async (req: Request, res: Response) => {
       },
     });
 
-    res.json({
-      msg: 'signup success',
-    });
+    res.json(new ApiResponse(200, { email }, 'Signup Success'));
   } catch (e) {
     console.log(e);
     console.error('Error while creating Admin');
 
-    res.status(400).json({
-      error: true,
-      msg: 'Error while creating Admin',
-    });
+    res
+      .status(400)
+      .json(
+        new ApiResponse(400, { error: true }, 'Problem while creating Admin'),
+      );
   }
 };
 
@@ -67,16 +68,12 @@ export const signin = async (req: Request, res: Response) => {
       JWT_SECRET,
     );
 
-    res.json({
-      msg: 'signin success',
-      token,
-    });
+    res.json(new ApiResponse(200, { token: token }, 'signin success'));
   } catch (e) {
     console.log(e);
 
-    res.status(401).json({
-      error: true,
-      msg: 'Invalid email or password',
-    });
+    res
+      .status(401)
+      .json(new ApiResponse(401, { error: true }, 'Invalid email or password'));
   }
 };

@@ -4,6 +4,9 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 
 import logger from './utils/logger.js';
+import ApiResponse from './utils/apiResponse.js';
+
+// ** routes **
 import authRouter from './routes/auth.js';
 import courseRouter from './routes/course.js';
 import userRouter from './routes/user.js';
@@ -32,7 +35,7 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.send('Up and Running...');
+  res.status(200).json(new ApiResponse(200, 'Up and Running'));
 });
 
 app.use('/auth', authRouter);
