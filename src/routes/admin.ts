@@ -4,8 +4,8 @@ import { signup, signin } from '../controllers/admin.js';
 
 const adminRouter = Router();
 
-adminRouter.post('/signup', signup);
+adminRouter.route('/signup').post(signup);
 
-adminRouter.post('/login', signin);
+adminRouter.route('/login').post(signin);
 
 export default adminRouter;

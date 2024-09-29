@@ -4,8 +4,8 @@ import { signin, signup } from '../controllers/auth.js';
 
 const authRouter = Router();
 
-authRouter.post('/signup', signup);
+authRouter.route('/signup').post(signup);
 
-authRouter.post('/login', signin);
+authRouter.route('/login').post(signin);
 
 export default authRouter;

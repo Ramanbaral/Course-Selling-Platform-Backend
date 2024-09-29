@@ -7,8 +7,8 @@ const userRouter = Router();
 
 userRouter.use(auth);
 
-userRouter.get('/courses', getAllCourse);
+userRouter.route('/courses').get(getAllCourse);
 
-userRouter.post('/purchase/:courseId', purchaseCourse);
+userRouter.route('/purchase/:courseId').post(purchaseCourse);
 
 export default userRouter;

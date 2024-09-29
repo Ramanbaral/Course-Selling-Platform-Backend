@@ -12,12 +12,12 @@ const courseRouter = Router();
 
 courseRouter.use(auth);
 
-courseRouter.post('/create', createCourse);
+courseRouter.route('/create').post(createCourse);
 
-courseRouter.get('/:id', courseInf);
+courseRouter.route('/:id').get(courseInf);
 
-courseRouter.delete('/delete/:id', deleteCourse);
+courseRouter.route('/delete/:id').delete(deleteCourse);
 
-courseRouter.put('/modifyprice/:id', modifyPrice);
+courseRouter.route('/modifyprice/:id').put(modifyPrice);
 
 export default courseRouter;
