@@ -8,6 +8,7 @@ import ApiResponse from './utils/apiResponse.js';
 import errorHandler from './middlewares/error.js';
 
 // ** routes **
+import healthRouter from './routes/healthCheck.js';
 import authRouter from './routes/auth.js';
 import courseRouter from './routes/course.js';
 import userRouter from './routes/user.js';
@@ -35,14 +36,13 @@ app.use(
   }),
 );
 
-app.get('/', (req, res) => {
-  res.status(200).json(new ApiResponse(200, 'Up and Running'));
-});
+const basePath = '/api/v1';
 
-app.use('/auth', authRouter);
-app.use('/course', courseRouter);
-app.use('/user', userRouter);
-app.use('/admin', adminRouter);
+app.use(basePath + '/' , healthRouter)
+app.use(basePath + '/auth', authRouter);
+app.use(basePath + '/course', courseRouter);
+app.use(basePath + '/user', userRouter);
+app.use(basePath + '/admin', adminRouter);
 
 // error handling middleware
 app.use(errorHandler);
