@@ -1,12 +1,15 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 
+import asyncHandler from '../utils/asyncHandler.js';
+import ApiResponse from '../utils/apiResponse.js';
+
 const prisma = new PrismaClient();
 
-export const getAllCourse = async (req: Request, res: Response) => {
-  const userId = req.user.id;
+export const getAllCourse = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userId = req.user.id;
 
-  try {
     const courses = await prisma.purchase.findMany({
       where: {
         userId: userId,
@@ -16,26 +19,17 @@ export const getAllCourse = async (req: Request, res: Response) => {
       },
     });
 
-    res.json({
-      msg: 'Success',
-      courses,
-    });
-  } catch (e) {
-    console.log(e);
-    console.error('Error Fetching courses.');
+    res.json(
+      new ApiResponse(200, { courses }, 'Courses fetched successfully '),
+    );
+  },
+);
 
-    res.status(500).json({
-      error: true,
-      msg: 'Error Fetching courses',
-    });
-  }
-};
+export const purchaseCourse = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userId = req.user.id;
+    const courseId = parseInt(req.params.courseId);
 
-export const purchaseCourse = async (req: Request, res: Response) => {
-  const userId = req.user.id;
-  const courseId = parseInt(req.params.courseId);
-
-  try {
     //check for validity of courseId
     const c = await prisma.course.findUniqueOrThrow({
       where: {
@@ -54,16 +48,12 @@ export const purchaseCourse = async (req: Request, res: Response) => {
       },
     });
 
-    res.json({
-      msg: `Successfully Purchased course: ${c.title}`,
-    });
-  } catch (e) {
-    console.log(e);
-    console.error('Error while purchasing course');
-
-    res.status(400).json({
-      error: true,
-      msg: 'Error while purchasing course',
-    });
-  }
-};
+    res.json(
+      new ApiResponse(
+        200,
+        { courseTitle: c.title },
+        `Successfully Purchased course: ${c.title}`,
+      ),
+    );
+  },
+);

@@ -1,15 +1,18 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 
+import asyncHandler from '../utils/asyncHandler.js';
+import ApiResponse from '../utils/apiResponse.js';
+
 const prisma = new PrismaClient();
 
-export const createCourse = async (req: Request, res: Response) => {
-  const adminId = req.admin.id;
+export const createCourse = asyncHandler(
+  async (req: Request, res: Response) => {
+    const adminId = req.admin.id;
 
-  //add data validation (zod)
-  const { title, desc, price, thumbnail, tags } = req.body;
+    //add data validation (zod)
+    const { title, desc, price, thumbnail, tags } = req.body;
 
-  try {
     const c = await prisma.course.create({
       data: {
         title: title,
@@ -24,48 +27,27 @@ export const createCourse = async (req: Request, res: Response) => {
       },
     });
 
-    res.json({
-      msg: `Course ${c.title} Created`,
-    });
-  } catch (e) {
-    console.log(e);
+    res.json(new ApiResponse(200, { title }, `Course ${c.title} Created`));
+  },
+);
 
-    res.status(400).json({
-      error: true,
-      msg: 'Error while creating course',
-    });
-  }
-};
-
-export const courseInf = async (req: Request, res: Response) => {
+export const courseInf = asyncHandler(async (req: Request, res: Response) => {
   const courseId = parseInt(req.params.id);
 
-  try {
-    const course = await prisma.course.findUniqueOrThrow({
-      where: {
-        id: courseId,
-      },
-    });
+  const course = await prisma.course.findUniqueOrThrow({
+    where: {
+      id: courseId,
+    },
+  });
 
-    res.json({
-      msg: 'success',
-      course,
-    });
-  } catch (e) {
-    console.log(e);
+  res.json(new ApiResponse(200, { course }, 'successfully fetched course'));
+});
 
-    res.status(400).json({
-      error: true,
-      msg: 'Course not found',
-    });
-  }
-};
+export const deleteCourse = asyncHandler(
+  async (req: Request, res: Response) => {
+    const adminId = req.admin.id;
+    const courseId = parseInt(req.params.id);
 
-export const deleteCourse = async (req: Request, res: Response) => {
-  const adminId = req.admin.id;
-  const courseId = parseInt(req.params.id);
-
-  try {
     const course = await prisma.course.findUniqueOrThrow({
       where: {
         id: courseId,
@@ -85,48 +67,41 @@ export const deleteCourse = async (req: Request, res: Response) => {
       },
     });
 
-    res.json({
-      msg: `Deleted Course ${course.title}`,
-    });
-  } catch (e) {
-    console.log(e);
+    res.json(
+      new ApiResponse(
+        200,
+        { title: course.title },
+        `Deleted Course ${course.title}`,
+      ),
+    );
+  },
+);
 
-    res.status(400).json({
-      error: true,
-      msg: 'something went wrong',
-    });
-  }
-};
-
-export const modifyPrice = async (req: Request, res: Response) => {
+export const modifyPrice = asyncHandler(async (req: Request, res: Response) => {
   const adminId = req.admin.id;
   const courseId = parseInt(req.params.id);
 
+  //validate the req body
   const { price } = req.body;
 
-  try {
-    const course = await prisma.course.update({
-      where: {
-        id: courseId,
-        creatorId: adminId,
-      },
-      data: {
-        price: price,
-      },
-      select: {
-        title: true,
-      },
-    });
+  const course = await prisma.course.update({
+    where: {
+      id: courseId,
+      creatorId: adminId,
+    },
+    data: {
+      price: price,
+    },
+    select: {
+      title: true,
+    },
+  });
 
-    res.json({
-      msg: `updated price of course: ${course.title}`,
-    });
-  } catch (e) {
-    console.log(e);
-
-    res.status(400).json({
-      error: true,
-      msg: 'Error updating price',
-    });
-  }
-};
+  res.json(
+    new ApiResponse(
+      200,
+      { title: course.title },
+      `updated price of course: ${course.title}`,
+    ),
+  );
+});

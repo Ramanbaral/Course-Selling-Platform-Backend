@@ -6,6 +6,6 @@ const adminRouter = Router();
 
 adminRouter.route('/signup').post(signup);
 
-adminRouter.route('/login').post(signin);
+adminRouter.route('/signin').post(signin);
 
 export default adminRouter;

@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 
 import logger from './utils/logger.js';
-import ApiResponse from './utils/apiResponse.js';
 import errorHandler from './middlewares/error.js';
 
 // ** routes **
@@ -38,7 +37,7 @@ app.use(
 
 const basePath = '/api/v1';
 
-app.use(basePath + '/' , healthRouter)
+app.use(basePath + '/', healthRouter);
 app.use(basePath + '/auth', authRouter);
 app.use(basePath + '/course', courseRouter);
 app.use(basePath + '/user', userRouter);

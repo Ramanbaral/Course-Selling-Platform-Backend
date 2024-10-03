@@ -4,79 +4,57 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 
+import asyncHandler from '../utils/asyncHandler.js';
+import ApiError from '../utils/apiError.js';
+import ApiResponse from '../utils/apiResponse.js';
+
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'somesecret';
 const SALTROUNDS = 3;
 const p = new PrismaClient();
 
-export const signin = async (req: Request, res: Response) => {
+export const signin = asyncHandler(async (req: Request, res: Response) => {
   //use zod for data validation
-
   const { email, pwd } = req.body;
 
-  try {
-    const usr = await p.user.findFirstOrThrow({
-      where: {
-        email: email,
-      },
-      select: {
-        id: true,
-        email: true,
-        password: true,
-      },
-    });
+  const usr = await p.user.findFirstOrThrow({
+    where: {
+      email: email,
+    },
+    select: {
+      id: true,
+      email: true,
+      password: true,
+    },
+  });
 
-    //check pwd with hashed password
-    const pwdMatch = await bcrypt.compare(pwd, usr.password);
-    if (!pwdMatch) throw new Error('Invalid password');
+  //check pwd with hashed password
+  const pwdMatch = await bcrypt.compare(pwd, usr.password);
+  if (!pwdMatch) throw new ApiError(400, '', 'Invalid email or password');
 
-    const token = jwt.sign(
-      {
-        id: usr.id,
-      },
-      JWT_SECRET,
-    );
+  const token = jwt.sign(
+    {
+      id: usr.id,
+    },
+    JWT_SECRET,
+  );
 
-    res.json({
-      msg: 'signin success',
-      token,
-    });
-  } catch (e) {
-    console.log(e);
+  res.json(new ApiResponse(200, { token }, 'signin success'));
+});
 
-    res.status(401).json({
-      error: true,
-      msg: 'Invalid email or password',
-    });
-  }
-};
-
-export const signup = async (req: Request, res: Response) => {
+export const signup = asyncHandler(async (req: Request, res: Response) => {
   //use zod for data validation
-
   const { email, pwd } = req.body;
 
-  try {
-    //hash the pwd before storing in DB
-    const hashedPwd = await bcrypt.hash(pwd, SALTROUNDS);
+  //hash the pwd before storing in DB
+  const hashedPwd = await bcrypt.hash(pwd, SALTROUNDS);
 
-    await p.user.create({
-      data: {
-        email: email,
-        password: hashedPwd,
-      },
-    });
+  await p.user.create({
+    data: {
+      email: email,
+      password: hashedPwd,
+    },
+  });
 
-    res.json({
-      msg: 'signup success',
-    });
-  } catch (e) {
-    console.log(e);
-    console.error('Error while creating user');
-
-    res.status(400).json({
-      error: true,
-      msg: 'Error while creating user',
-    });
-  }
-};
+  res.json(new ApiResponse(200, { email }, 'signup success'));
+});

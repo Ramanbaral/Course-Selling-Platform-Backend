@@ -3,16 +3,18 @@ class ApiError extends Error {
   errors: any;
   message: string;
   stack: string | undefined;
+  success: Boolean;
 
   constructor(
     statusCode: number,
     errors: any,
-    message = "Error Occured",
-    stack: string | undefined,
+    message = 'Error Occured',
+    stack?: string | undefined,
   ) {
     super(message);
     this.statusCode = statusCode;
     this.message = message;
+    this.success = false;
     this.errors = errors;
 
     if (stack) {
