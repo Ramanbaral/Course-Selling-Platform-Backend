@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 
 import logger from './utils/logger.js';
+import { notFound } from './middlewares/404.js';
 import errorHandler from './middlewares/error.js';
 
 // ** routes **
@@ -45,6 +46,9 @@ app.use(basePath + '/admin', adminRouter);
 
 // error handling middleware
 app.use(errorHandler);
+
+//handling 404
+app.use(notFound);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
