@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
-import { IadminInReq } from '../typings/index.js';
-import ApiError from '../utils/apiError.js';
+import { IadminInReq } from '@/typings/index.js';
+import ApiError from '@/utils/apiError.js';
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'somesecret';

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { auth } from '../middlewares/auth.js';
-import { getAllCourse, purchaseCourse } from '../controllers/user.js';
+import { auth } from '@/middlewares/auth.js';
+import { getAllCourse, purchaseCourse } from '@/controllers/user.js';
 
 const userRouter = Router();
 

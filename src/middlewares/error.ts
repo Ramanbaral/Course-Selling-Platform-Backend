@@ -1,5 +1,5 @@
 import { Request, Response, ErrorRequestHandler, NextFunction } from 'express';
-import ApiError from '../utils/apiError.js';
+import ApiError from '@/utils/apiError.js';
 import {
   PrismaClientKnownRequestError,
   PrismaClientUnknownRequestError,

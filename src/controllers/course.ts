@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 
-import asyncHandler from '../utils/asyncHandler.js';
-import ApiResponse from '../utils/apiResponse.js';
+import asyncHandler from '@/utils/asyncHandler.js';
+import ApiResponse from '@/utils/apiResponse.js';
 
 const prisma = new PrismaClient();
 

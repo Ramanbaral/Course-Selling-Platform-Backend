@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import { auth } from '../middlewares/admin.js';
+import { auth } from '@/middlewares/admin.js';
 import {
   createCourse,
   deleteCourse,
   modifyPrice,
   courseInf,
-} from '../controllers/course.js';
+} from '@/controllers/course.js';
 
 const courseRouter = Router();
 

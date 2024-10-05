@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 
-import ApiResponse from '../utils/apiResponse.js';
-import ApiError from '../utils/apiError.js';
-import asyncHandler from '../utils/asyncHandler.js';
+import ApiResponse from '@/utils/apiResponse.js';
+import ApiError from '@/utils/apiError.js';
+import asyncHandler from '@/utils/asyncHandler.js';
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'somesecret';

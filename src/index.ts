@@ -3,16 +3,16 @@ import path from 'path';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 
-import logger from './utils/logger.js';
-import { notFound } from './middlewares/404.js';
-import errorHandler from './middlewares/error.js';
+import logger from '@/utils/logger.js';
+import notFound from '@/middlewares/404.js';
+import errorHandler from '@/middlewares/error.js';
 
 // ** routes **
-import healthRouter from './routes/healthCheck.js';
-import authRouter from './routes/auth.js';
-import courseRouter from './routes/course.js';
-import userRouter from './routes/user.js';
-import adminRouter from './routes/admin.js';
+import healthRouter from '@/routes/healthCheck.js';
+import authRouter from '@/routes/auth.js';
+import courseRouter from '@/routes/course.js';
+import userRouter from '@/routes/user.js';
+import adminRouter from '@/routes/admin.js';
 
 dotenv.config();
 const morganFormat = ':method :url :status :response-time ms';
